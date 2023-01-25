@@ -12,6 +12,7 @@ const express = require('express');
 const http = require('http');
 const https = require('https');
 const cors = require('cors');
+const fcgi = require('node-fastcgi');
 
 //build config from params
 const config = require('./config');
@@ -25,9 +26,19 @@ const routes = require('./routes/index.route');
 app.use(routes);
 
 //start http server
+/*
+
 const httpServer = http.createServer(app);
 httpServer.listen(port);
 console.log(`[${serviceName}] http server listening at port ${port}`);
+
+*/
+
+// start fastcgi server
+const fcgiServer = fcgi.createServer(app);
+fcgiServer.listen();
+
+
 
 //start https server
 if(isHttps) {
